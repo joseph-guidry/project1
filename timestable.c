@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 			end = myatoi(argv[1]);
 			table_format(start, end);
 		} else {
-			printf("Arguement is not a number");
+			printf("Arguement is not a valid number\n");
 			return 0;
 		}
 	}
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
             }
 			table_format(start, end);
 		} else {
-			printf("Arguement is not a number");
+			printf("Not all arguements is not a valid numbers\n");
 			return 0;
 		}
     }
@@ -90,35 +90,41 @@ void table_format(int start, int end)
 void print_table(int min, int max, int mod, char format[])
 //Takes the start and end values, with Formatting. Prints times tables.
 {
-	int x, start, hold = min;         //changed to hold min value on second for loop.
+	int count, start, hold = min;         //changed to hold min value on second for loop.
 	print_header(min, max, mod, format);
 	for (start = min; start <= max; start++){	
 
         // Print left side header. Add Vertical Bar unicode char.
-		printf("%3d %s", min, "\u2503"); 
+		printf("%3d %s", start, "\u2503"); 
 
-		for(x = hold; x <= max; x++){
-			printf(format, x * start);
+		for(count = hold; count <= max; count++){
+			printf(format, count * start);
 		}
 		printf("\n");
-		x = hold;              //reset x to hold value
+		count = hold;              //reset x to hold value
 	}
 }
 void print_header(int min, int max, int mod, char format[])
 //Takes two integers for width of the multiplication table.
 {
     char horizontal_bar[] = "\u2501";
-    printf("%3c %s", '*', "\u2503");
-    for( int x = min; x <= max ; x++){
+    printf("%3c %s", '*', "\u2503");    //Print first block with '*" and vertical bar.
+
+    //Loop through numbers, min through max.
+    for( int x = min; x <= max ; x++){  
         printf(format, x);
     }
     printf("\n");
+
     //Start horizontal line over table.
     for ( int x = 0; x < 4; x++){
         printf("%s", horizontal_bar);
     }
-    printf("%s", "\u254B"); //Unicode '+' character to connect lines.
-    //Loop to print remaining horizontal line over table.
+
+    //Unicode '+' character to connect lines.
+    printf("%s", "\u254B"); 
+
+    //Loop to print remaining horizontal line over table.  
     for (int x = 0; x < ((strlen(format) + mod ) * (max - min + 1)); x++){
          printf("%s", horizontal_bar);
     }
