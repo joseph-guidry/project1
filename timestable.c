@@ -10,11 +10,11 @@
 
 #define MAX 10
 
-void print_table(int x, int y, char format[]);
-void print_header(int min, int max, char format[]);
-int check_number(char arg[]);
-int myatoi(char arg[]);
-void table_format(int min, int max);
+void print_table(int x, int y, int z, char s[]);
+void print_header(int x, int y, int z, char s[]);
+int check_number(char s[]);
+int myatoi(char s[]);
+void table_format(int x, int y);
 
 int main(int argc, char *argv[])
 //Takes optional input from the command line.  
@@ -70,39 +70,41 @@ int myatoi(char arg[])
 void table_format(int start, int end)
 //Takes integers start and end as parameters. Calls print_table.
 {
-		
+    int offset = 0;
 	if (end < 32){                      
         // For 3-digit integer multiples.
-		char string[MAX] = "%3d ";
-		print_table(start, end, string);
+		char string[MAX] = " %3d";
+		print_table(start, end, offset, string);
 	} else if (end < 99){				
         // For up to 4-digit integer multiples.
-		char string[MAX] = "%3d ";	   
-		print_table(start, end, string);
+		char string[MAX] = " %4d";
+        offset = 1;  
+		print_table(start, end, offset, string);
 	} else {				
         // For up to 5-digit integer multiples.
-		char string[MAX] = "%5d ";
-		print_table(start, end, string);
+		char string[MAX] = " %5d";
+        offset = 2;
+		print_table(start, end, offset, string);
 	}
 }
-void print_table(int min, int max, char format[])
+void print_table(int min, int max, int mod, char format[])
 //Takes the start and end values, with Formatting. Prints times tables.
 {
-	int x, hold = min;         //changed to hold min value on second for loop.
-	print_header(min, max, format);
-	for (min; min <= max; min++){	
+	int x, start, hold = min;         //changed to hold min value on second for loop.
+	print_header(min, max, mod, format);
+	for (start = min; start <= max; start++){	
 
         // Print left side header. Add Vertical Bar unicode char.
 		printf("%3d %s", min, "\u2503"); 
 
 		for(x = hold; x <= max; x++){
-			printf(format, x * min);
+			printf(format, x * start);
 		}
 		printf("\n");
 		x = hold;              //reset x to hold value
 	}
 }
-void print_header(int min, int max, char format[])
+void print_header(int min, int max, int mod, char format[])
 //Takes two integers for width of the multiplication table.
 {
     char horizontal_bar[] = "\u2501";
@@ -117,9 +119,8 @@ void print_header(int min, int max, char format[])
     }
     printf("%s", "\u254B"); //Unicode '+' character to connect lines.
     //Loop to print remaining horizontal line over table.
-    for (int x = 5; x < (strlen(format) * (max - min + 1)) + 4; x++){
+    for (int x = 0; x < ((strlen(format) + mod ) * (max - min + 1)); x++){
          printf("%s", horizontal_bar);
     }
     printf("\n");
-
 }
