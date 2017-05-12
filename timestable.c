@@ -36,6 +36,10 @@ int main(int argc, char *argv[])
     	if((check_number(argv[1]) == 0) && (check_number(argv[2]) == 0)){
 			start = myatoi(argv[1]);
 			end = myatoi(argv[2]);
+            if (start > end){
+                printf("Error: MAX less than MIN\n");
+                return 0;
+            }
 			table_format(start, end);
 		} else {
 			printf("Arguement is not a number");
