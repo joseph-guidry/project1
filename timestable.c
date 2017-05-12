@@ -3,6 +3,7 @@
 #define MAX 10
 
 void print_table(int x, int y, char format[]);
+void print_header(int min, int max, char format[]);
 int check_number(char arg[]);
 int myatoi(char arg[]);
 void table_format(int min, int max);
@@ -10,6 +11,9 @@ void table_format(int min, int max);
 int main(int argc, char *argv[])
 {
 	int start = 1, end = 10;
+	if (argc < 2){
+    	table_format(start, end);
+    }
 	if (argc == 2){
 		if(check_number(argv[1]) == 0){
 			end = myatoi(argv[1]);
@@ -19,8 +23,15 @@ int main(int argc, char *argv[])
 			return 0;
 		}
 	}
-    if (argc < 2){
-    	table_format(start, end);
+    if (argc > 2){
+    	if((check_number(argv[1]) == 0) && (check_number(argv[2]) == 0)){
+			start = myatoi(argv[1]);
+			end = myatoi(argv[2]);
+			table_format(start, end);
+		} else {
+			printf("Arguement is not a number");
+			return 0;
+		}
     }
 }
 
@@ -58,11 +69,21 @@ void table_format(int start, int end)
 void print_table(int min, int max, char format[])
 //Takes the start and end values, with Formatting. Prints times tables.
 {
+	int x, hold = min;               //changed to hold min value on second for loop.
+	print_header(min, max, format);
 	for (min; min <= max; min++){	
 		printf("%3d ", min);	
-		for(int x = 1; x <= max; x++){
+		for(x = hold; x <= max; x++){
 			printf(format, x * min);
 		}
 		printf("\n");
+		x = hold;                    //reset x to hold value
 	}
+}
+void print_header(int min, int max, char format[])
+{
+    printf("%3c ", '*');
+    for( int x = min; x <= max ; x++)
+        printf(format, x);
+    printf("\n");
 }
