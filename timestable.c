@@ -10,29 +10,29 @@
 
 #define MAX 10
 
-void print_table(int x, int y, int z, char s[]);
-void print_header(int x, int y, int z, char s[]);
 int check_number(char s[]);
 int myatoi(char s[]);
 void table_format(int x, int y);
+void print_table(int x, int y, int z, char s[]);
+void print_header(int x, int y, int z, char s[]);
 
 int main(int argc, char *argv[])
 //Takes optional input from the command line.  
 {
 	int start = 1, end = 10;
-	if (argc < 2){     //no command line arguements.
+	if (argc < 2){     //no command line arguments.
     	table_format(start, end);
     }
-	if (argc == 2){    // only 1 command line arguement.
+	if (argc == 2){    //only 1 command line argument.
 		if(check_number(argv[1]) == 0){
 			end = myatoi(argv[1]);
 			table_format(start, end);
 		} else {
-			printf("Arguement is not a valid number\n");
+			printf("Argument is not a valid number\n");
 			return 0;
 		}
 	}
-    if (argc > 2){    //Takes first two command line arguements
+    if (argc > 2){    //Takes first two command line arguments
     	if((check_number(argv[1]) == 0) && (check_number(argv[2]) == 0)){
 			start = myatoi(argv[1]);
 			end = myatoi(argv[2]);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
             }
 			table_format(start, end);
 		} else {
-			printf("Not all arguements is not a valid numbers\n");
+			printf("Not all arguments is not a valid numbers\n");
 			return 0;
 		}
     }
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 int check_number(char arg[])
 //Takes character array. Returns integer value.
 {
-	for(int i = 0; arg[i] != '\0' ; i++) {
+	for(int i = 0; arg[i] != '\0'; i++) {
 		if ((arg[i] < '0') || (arg[i] > '9')) {
 			return 1;  //If non-digit. 
 		}
@@ -59,7 +59,7 @@ int check_number(char arg[])
 	return 0;   // Successful check 
 }
 int myatoi(char arg[])
-//Take char arguement value. Return integer value. 
+//Take char argument value. Return integer value. 
 {
 	int return_int = 0, i = 0;
 	while( arg[i] >= '0' && arg[i] <= '9'){
@@ -94,7 +94,7 @@ void print_table(int min, int max, int mod, char format[])
 	print_header(min, max, mod, format);
 	for (start = min; start <= max; start++){	
 
-        // Print left side header. Add Vertical Bar unicode char.
+        // Print left side header. Add Vertical Bar Unicode char.
 		printf("%3d %s", start, "\u2503"); 
 
 		for(count = hold; count <= max; count++){
@@ -111,7 +111,7 @@ void print_header(int min, int max, int mod, char format[])
     printf("%3c %s", '*', "\u2503");    //Print first block with '*" and vertical bar.
 
     //Loop through numbers, min through max.
-    for( int x = min; x <= max ; x++){  
+    for( int x = min; x <= max; x++){  
         printf(format, x);
     }
     printf("\n");
